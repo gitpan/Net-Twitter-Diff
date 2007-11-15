@@ -1,5 +1,8 @@
 Revision history for Net-Twitter-Diff
 
+0.04    2007-11-15/16:25
+        - Fix POD
+
 0.03    2007-11-14/11:04
         - Relase on CPAN
 

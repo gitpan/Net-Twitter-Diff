@@ -5,7 +5,7 @@ use strict;
 use base qw/Net::Twitter/;
 use Array::Diff;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 sub xfollowing {
     my $self = shift;
@@ -179,7 +179,8 @@ Net::Twitter::Diff - Twitter Diff
     
 =head1 DESCRIPTION
 
-Handy when you want to know relationshop between your followers and follwoings and when you wnat to compare your following and sombody's.
+Handy when you want to know relationshop between your followers and follwoings
+and when you wnat to compare your following and somebody's.
 
 =head1 METHOD
 
@@ -219,7 +220,7 @@ only you are following
 
 =item B<not_me>
 
-you are not following but sombody is following
+you are not following but somebody is following
 
 =item B<share>
 
@@ -237,10 +238,10 @@ can get more that 100 followers.
 
 =head1 SEE ALSO
 
-L:<Net::Twitter>
+L<Net::Twitter>
 
 =head1 AUTHOR
 
-Tomohiro Teranishi<tomohiro.teranishi@gmail.com.
+Tomohiro Teranishi<tomohiro.teranishi@gmail.com>
 
 =cut
