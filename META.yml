@@ -1,13 +1,23 @@
-# http://module-build.sourceforge.net/META-spec.html
-#XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
-name:         Net-Twitter-Diff
-version:      0.04
-version_from: lib/Net/Twitter/Diff.pm
-installdirs:  site
-requires:
-    Array::Diff:                   0
-    Net::Twitter:                  0
-    Test::More:                    0
-
+---
+abstract: 'Twitter Diff'
+author:
+  - 'Tomohiro Teranishi <tomohiro.terranishi@gmail.com>'
 distribution_type: module
-generated_by: ExtUtils::MakeMaker version 6.30
+generated_by: 'Module::Install version 0.80'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: Net-Twitter-Diff
+no_index:
+  directory:
+    - inc
+    - t
+requires:
+  Array::Diff: 0
+  Net::Twitter: 3.03000
+  Test::More: 0
+resources:
+  license: http://dev.perl.org/licenses/
+  repository: http://svn.coderepos.org/share/lang/perl/Net-Twitter-Diff/trunk
+version: 0.10
