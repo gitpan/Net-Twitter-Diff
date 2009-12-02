@@ -8,19 +8,20 @@ with 'Net::Twitter::Role::API::REST';
 
 use Array::Diff;
 
-our $VERSION = '0.10';
+our $VERSION = '0.11';
 
 sub xfollowing {
     my $self = shift;
     my $id   = shift;
 
-    my $page = 1;
+    my $cursor = -1;
     my @data = ();
     while(1){
-        my $res = $self->following( { id => $id , page => $page } );
-        last unless scalar @{ $res };
-        push @data , @{ $res };
-        $page++;
+        my $res = $self->following( { id => $id , cursor => $cursor } );
+        push @data , @{ $res->{users} };
+
+        $cursor = $res->{next_cursor};
+        last if $cursor == 0;
     }
 
     return \@data;
@@ -29,13 +30,14 @@ sub xfollowing {
 sub xfollowers {
     my $self = shift;
 
-    my $page = 1;
-    my @data = ();
+    my $cursor = -1;
+    my @data   = ();
     while(1){
-        my $res = $self->followers({ page => $page });
-        last unless scalar @{ $res };
-        push @data , @{ $res };
-        $page++;
+        my $res = $self->followers({ cursor => $cursor });
+        push @data , @{ $res->{users} };
+
+        $cursor = $res->{next_cursor};
+        last if $cursor == 0;
     }
 
     return \@data;
@@ -46,20 +48,10 @@ sub diff {
     my $args = shift;
 
     my $res = {};
-    my $followings_hash = $self->xfollowing();
-    my $followers_hash  = $self->xfollowers();
-    my $followers = [];
-    my $followings = [];
+    my @following = map { $_->{screen_name} } @{$self->xfollowing};
+    my @followers = map { $_->{screen_name} } @{$self->xfollowers};
 
-    for my $item ( @{ $followings_hash } ) {
-        push @{ $followings } , $item->{screen_name};
-    }
-
-    for my $item ( @{ $followers_hash } ) {
-        push @{ $followers } , $item->{screen_name};
-    }
-
-    my $diff = Array::Diff->diff( [ sort @{$followers} ] , [ sort @{$followings} ] );
+    my $diff = Array::Diff->diff( [ sort @followers ] , [ sort @following ] );
 
     $res->{not_following} = $diff->deleted;
     $res->{not_followed}  = $diff->added;
@@ -69,7 +61,7 @@ sub diff {
            $not_followed_ref->{ $user } = 1;
     }
 
-    for my $screen_name ( @{ $followings } ) {
+    for my $screen_name ( @following ) {
         if ( !defined $not_followed_ref->{ $screen_name  } ) {
             push @communicated , $screen_name;
         }
