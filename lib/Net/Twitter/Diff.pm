@@ -8,7 +8,7 @@ with 'Net::Twitter::Role::API::REST';
 
 use Array::Diff;
 
-our $VERSION = '0.11';
+our $VERSION = '0.12';
 
 sub xfollowing {
     my $self = shift;
@@ -17,7 +17,9 @@ sub xfollowing {
     my $cursor = -1;
     my @data = ();
     while(1){
-        my $res = $self->following( { id => $id , cursor => $cursor } );
+        my $args = { cursor => $cursor } ;
+        $args->{id} = $id if $id;
+        my $res = $self->following( $args );
         push @data , @{ $res->{users} };
 
         $cursor = $res->{next_cursor};

@@ -1,5 +1,8 @@
 Revision history for Net-Twitter-Diff
 
+0.12    2010-08-13/21:12
+        - FIXED RT#60297 
+
 0.11    2009-12-03/01:22
         - RT#52362 'Page vs. Cursor' thanks to BLOM's patch!
 
